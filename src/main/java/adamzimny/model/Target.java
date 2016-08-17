@@ -1,20 +1,25 @@
 package adamzimny.model;
 
-import org.springframework.data.annotation.Id;
 
+import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by Adam on 2016-07-15.
- */
+@Entity
 public class Target {
 
     @Id
-    int id;
-    User killer;
-    User victim;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    Integer id;
+    @OneToOne
+    User hunter;
+    @OneToOne
+    User hunted;
     String status;
     Date created;
     Date completed;
-    boolean global = false;
+    boolean publicTarget = false;
+
+    @OneToOne
+    Location location;
+
 }

@@ -1,17 +1,11 @@
-package adamzimny.model;
+package adamzimny.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.Date;
 
 /**
- * Created by Adam on 2016-07-15.
+ * Created by adamz on 17.08.2016.
  */
-@Entity
-public class User {
-    @Id
-    @GeneratedValue
+public class UserDTO {
     private Integer id;
     String firstName;
     String lastName;
@@ -31,6 +25,4 @@ public class User {
     String gender;
     Date dateOfBirth;
     String description;
-
-
 }

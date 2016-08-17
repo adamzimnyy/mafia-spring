@@ -1,25 +1,25 @@
 package adamzimny.model;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.util.Date;
 
+
 @Entity
-public class Location {
-    @Id
+public class Reward {
+
+   @Id
     @GeneratedValue
     Integer id;
-    long latitude;
-    long longitute;
-    String type;
-    Date created;
 
+    @OneToOne
+    User player;
+    int value;
+    Date added;
+    String awardedFor;
 
-
-    public int getId() {
-        return id;
-    }
+    @OneToOne
+    Target target;
 }
