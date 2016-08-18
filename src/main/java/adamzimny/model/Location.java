@@ -15,8 +15,10 @@ public class Location {
     long latitude;
     long longitute;
     String type;
-    Date created;
+    Date date;
 
+    @OneToOne
+    User user;
 
 
     public int getId() {
