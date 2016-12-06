@@ -22,14 +22,11 @@ import java.util.Properties;
  * Created by Adam on 2016-04-16.
  */
 
-@RestController
-@RequestMapping(value = "/register/pic")
 public class UploadController {
 
     @Autowired
     UserService userService;
 
-    @RequestMapping(value= {"/",""} ,method = RequestMethod.POST)
     public ResponseEntity<?> upload(@RequestBody MultipartFile file) {
         ImgurData imgur;
         if (!file.isEmpty()) {

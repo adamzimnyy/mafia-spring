@@ -1,7 +1,7 @@
 package adamzimny.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
-import javax.websocket.OnError;
 import java.util.Date;
 
 /**
@@ -18,10 +18,17 @@ public class User {
 
     @Column(unique = true)
     String profilePicture;
-    String accountStatus;
+    String status;
+
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss Z")
     Date registerDate;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss Z")
     Date lastActive;
     int loginstreak;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss Z")
     Date noTargetSince;
     int score;
 
@@ -34,19 +41,29 @@ public class User {
     float targetDistance;
     String notifications;
     String gender;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss Z")
     Date dateOfBirth;
     String description;
     String authorities;
 
-    @OneToOne
-    Location averageLocation;
+    double latitude;
+    double longitude;
 
-    public Location getAverageLocation() {
-        return averageLocation;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setAverageLocation(Location averageLocation) {
-        this.averageLocation = averageLocation;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getFirstName() {
@@ -61,6 +78,31 @@ public class User {
         return lastName;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", profilePicture='" + profilePicture + '\'' +
+                ", status='" + status + '\'' +
+                ", registerDate=" + registerDate +
+                ", lastActive=" + lastActive +
+                ", loginstreak=" + loginstreak +
+                ", noTargetSince=" + noTargetSince +
+                ", score=" + score +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", targetDistance=" + targetDistance +
+                ", notifications='" + notifications + '\'' +
+                ", gender='" + gender + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", description='" + description + '\'' +
+                ", authorities='" + authorities + '\'' +
+                '}';
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -73,12 +115,12 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
-    public String getAccountStatus() {
-        return accountStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setAccountStatus(String accountStatus) {
-        this.accountStatus = accountStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getRegisterDate() {

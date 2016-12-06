@@ -30,7 +30,6 @@ public class DatabaseConfig {
         dataSource.setUrl("jdbc:postgresql://ec2-54-217-244-3.eu-west-1.compute.amazonaws.com:5432/d34ao9i53thrdn?&ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory");
         dataSource.setUsername("lrabvqpatpnttf");
         dataSource.setPassword("8icgrf9MWpO1GQt9sJ9i6xfKxu");
-
         return dataSource;
     }
 
@@ -45,7 +44,7 @@ public class DatabaseConfig {
     @Bean
     public HibernateJpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-        hibernateJpaVendorAdapter.setShowSql(true);
+        hibernateJpaVendorAdapter.setShowSql(false);
         hibernateJpaVendorAdapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
         return hibernateJpaVendorAdapter;
     }
@@ -62,7 +61,6 @@ public class DatabaseConfig {
         factory.setDataSource(dataSource());
         factory.setJpaProperties(jpaProperites());
         factory.afterPropertiesSet();
-
         return factory.getObject();
     }
 

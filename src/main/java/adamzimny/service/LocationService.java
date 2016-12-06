@@ -29,11 +29,16 @@ public class LocationService {
     @Autowired
     UserDAO userDAO;
 
-    public List<Location> findByUserAndDateAfter(User user, long dateLong) {
-        Date date = new Date(dateLong);
+    public List<Location> findByUserAndDateAfter(User user, Date date) {
         List<Location> list = locationDAO.findByUserAndDateAfter(user, date);
         return list;
     }
+
+    public Location findLast(User user) {
+        List<Location> list = locationDAO.findByUserOrderByDateDesc(user);
+        return list == null || list.isEmpty() ? null : list.get(0);
+    }
+
 
     public List<Location> findByUserAndType(User user, String type) {
         return locationDAO.findByUserAndType(user, type);
@@ -56,8 +61,9 @@ public class LocationService {
     }
 
     public Location findAverageLocation(User user) {
-        Preference daysPref = preferenceDAO.findByKey(Preferences.MAX_LOCATION_AGE_DAYS);
-        List<Location> list = locationDAO.findByUserAndDateAfter(user, new Date(new Date().getTime() - 24 * 3600 * 1000 * Integer.valueOf(daysPref.getValue())));
+        Optional<Preference> daysPref = preferenceDAO.findByKey(Preferences.MAX_LOCATION_AGE_DAYS);
+
+        List<Location> list = locationDAO.findByUserAndDateAfter(user, new Date(new Date().getTime() - 24 * 3600 * 1000 * Integer.valueOf(daysPref.isPresent()? daysPref.get().getValue() : "14")));
         if (list != null && !list.isEmpty()) {
             //TODO Compute average location
             Location location = new Location();

@@ -77,12 +77,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/api/**").authenticated()
-                .anyRequest().permitAll();
+                .antMatchers("/api/**").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN");
 
-        // Custom JWT based authentication
         httpSecurity
                 .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
-
 }

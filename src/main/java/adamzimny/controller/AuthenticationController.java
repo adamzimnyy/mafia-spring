@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,10 +19,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -64,10 +60,10 @@ public class AuthenticationController {
         // Reload password post-authentication so we can generate token
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         String token = this.tokenUtils.generateToken(userDetails, device);
-        Optional<User> user = userService.get( authenticationRequest.getUsername());
+        Optional<User> user = userService.get(authenticationRequest.getUsername());
 
         // Return the token
-        return ResponseEntity.ok(new AuthenticationResponse(token,user.get()));
+        return ResponseEntity.ok(new AuthenticationResponse(token, user.get()));
     }
 
     @RequestMapping(value = "refresh", method = RequestMethod.GET)
@@ -89,9 +85,9 @@ public class AuthenticationController {
     public ResponseEntity<?> getUserFromToken(HttpServletRequest request) {
         String token = request.getHeader(this.tokenHeader);
         String username = this.tokenUtils.getUsernameFromToken(token);
-        System.out.println("username = "+username);
+        System.out.println("username = " + username);
         Optional<User> user = userService.get(username);
-        System.out.println("user found  = "+user.isPresent());
+        System.out.println("user found  = " + user.isPresent());
         System.out.println(user);
         if (user.isPresent()) {
             User u = user.get();
@@ -101,5 +97,12 @@ public class AuthenticationController {
             return ResponseEntity.badRequest().body(null);
     }
 
+
+    @RequestMapping(value = "password", method = RequestMethod.GET)
+    public ResponseEntity<?> changePassword(@RequestParam("username") String username) {
+        Optional<User> user = userService.get(username);
+        //TODO send email with new password;
+        return ResponseEntity.ok(null);
+    }
 
 }

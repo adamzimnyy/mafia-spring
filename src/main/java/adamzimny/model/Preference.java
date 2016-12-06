@@ -13,6 +13,12 @@ public class Preference {
     String key;
     String value;
 
+
+    public Preference(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
+
     public String getKey() {
         return key;
     }

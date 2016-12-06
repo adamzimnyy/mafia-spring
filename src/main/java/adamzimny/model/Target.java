@@ -1,6 +1,8 @@
 package adamzimny.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -11,11 +13,15 @@ public class Target {
     @GeneratedValue(strategy= GenerationType.AUTO)
     Integer id;
     @OneToOne
-    User hunter;
-    @OneToOne
     User hunted;
+    @OneToOne
+    User hunter;
     String status;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss Z" )
     Date created;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss Z")
     Date completed;
     boolean publicTarget = false;
 
@@ -30,20 +36,20 @@ public class Target {
         this.id = id;
     }
 
-    public User getHunter() {
-        return hunter;
-    }
-
-    public void setHunter(User hunter) {
-        this.hunter = hunter;
-    }
-
     public User getHunted() {
         return hunted;
     }
 
     public void setHunted(User hunted) {
         this.hunted = hunted;
+    }
+
+    public User getHunter() {
+        return hunter;
+    }
+
+    public void setHunter(User hunter) {
+        this.hunter = hunter;
     }
 
     public String getStatus() {
